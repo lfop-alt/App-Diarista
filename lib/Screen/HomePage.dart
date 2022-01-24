@@ -20,7 +20,7 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
 
         actions: [
           IconButton(onPressed: () {
-            Navigator.pushNamed(context, '/cadastroDiarias');
+            Navigator.pushNamed(context, '/cadastroDiarias').then((newDiaria) => debugPrint(newDiaria.toString()));
           },
           icon: Icon(Icons.add, size: 33,)),
         ],
@@ -41,7 +41,7 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
               leading: Icon(Icons.add),
               title: Text('Cadastro'),
               onTap: () {
-                Navigator.pushNamed(context, '/cadastroDiarias');
+                Navigator.pushNamed(context, '/cadastroDiarias').then((newDiaria) => debugPrint(newDiaria.toString()));
               },
             )
           ],

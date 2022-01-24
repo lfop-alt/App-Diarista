@@ -1,7 +1,14 @@
+import 'package:diaristasimone/models/models_diaria.dart';
 import 'package:flutter/material.dart';
 
 class CadastroDiarias extends StatelessWidget {
-  const CadastroDiarias({Key? key}) : super(key: key);
+  CadastroDiarias({Key? key}) : super(key: key);
+
+  final TextEditingController _nomeCliente = TextEditingController();
+  final TextEditingController _valorDiarista = TextEditingController();
+  final TextEditingController _enderecoCliente = TextEditingController();
+  final TextEditingController _data = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -13,43 +20,70 @@ class CadastroDiarias extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.all(10.0),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
             child: TextField(
-              decoration: InputDecoration(
+              controller: _nomeCliente,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),labelText: "Nome do Cliente"
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(10.0),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
             child: TextField(
-              decoration: InputDecoration(
+              controller: _valorDiarista,
+              decoration: const InputDecoration(
                   border: OutlineInputBorder(),labelText: "Valor",
               ), keyboardType: TextInputType.number,
             ),
           ),
-          Row(
-               children: <Widget> [
-                 Expanded(
-                   child: TextButton(
-                     onPressed: () {
-                       showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2010), lastDate: DateTime(2025));
-                     },
-                     child: const Text("Escolha uma Data"),
-                     //style: ButtonStyle(backgroundColor: )
-                     //style: BoxDecoration(color: ),
-                     //style: const ButtonStyle(),
-                   )
-                 )
-               ]
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: TextField(
+              controller: _data,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),labelText: "Escolha uma Data"
+              ),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: TextField(
+              controller: _enderecoCliente,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),labelText: "Endereço"
+              ),
+            ),
+          ),
+          Campos(_enderecoCliente, 'tudo'),
           ElevatedButton(
-            onPressed: () {  },
+            onPressed: () {
+              final String cliente = _nomeCliente.text;
+              final double? valor = double.tryParse(_valorDiarista.text);
+              final String data_clien = _data.text;
+              final String endereco_client = _enderecoCliente.text;
+
+              final DiariasModels newDiaria = DiariasModels(cliente, valor!, data_clien, endereco_client);
+
+              Navigator.pop(context, newDiaria);
+            },
             child: const Text("Salvar"),
           )
         ],
       ) ,
     );
   }
+}
+
+Campos(controller, texto) {
+  Padding(
+    padding: const EdgeInsets.all(10.0),
+    child: TextField(
+      controller: controller,
+      decoration: const InputDecoration(
+          border: OutlineInputBorder(),labelText: 'texto'
+      ),
+    ),
+  );
 }
